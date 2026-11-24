@@ -169,17 +169,17 @@ export default function PitchPage() {
   return (
     <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8">
       {/* Header Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-950 via-slate-900 to-amber-950 p-6 sm:p-10 border border-emerald-500/30 shadow-2xl">
+      <div className="relative overflow-hidden rounded-3xl bg-white dark:bg-gradient-to-br dark:from-emerald-950 dark:via-slate-900 dark:to-amber-950 p-6 sm:p-10 border border-slate-200 dark:border-emerald-500/30 shadow-sm dark:shadow-2xl transition-colors">
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="space-y-3 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-              NATIONAL INNOVATION • OFFICIAL PITCH HUB
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-amber-100 dark:bg-amber-500/20 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-500/40">
+              <Sparkles className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+              NATIONAL INNOVATION • OFFICIAL EVALUATION HUB
             </div>
-            <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
-              Rescue<span className="text-emerald-400">Bite</span> Evaluation Center
+            <h1 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+              Puna<span className="text-emerald-500">rva</span> Evaluation Center
             </h1>
-            <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+            <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed">
               Designed for Hackathon Judges & Mentors. Review the live 3-minute pitch timeline,
               inspect the technical architecture, test interactive AI tools, and verify civic impact.
             </p>

@@ -50,17 +50,17 @@ export default function CSRCalculatorPage() {
   return (
     <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8 text-slate-900 dark:text-slate-100 transition-colors">
       {/* Header Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-950 via-slate-900 to-slate-950 p-6 sm:p-10 border border-emerald-500/30 shadow-xl">
+      <div className="relative overflow-hidden rounded-3xl bg-white dark:bg-gradient-to-br dark:from-emerald-950 dark:via-slate-900 dark:to-slate-950 p-6 sm:p-10 border border-slate-200 dark:border-emerald-500/30 shadow-sm dark:shadow-xl transition-colors">
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="space-y-3 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
-              <Building2 className="w-3.5 h-3.5 text-emerald-400" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-500/40">
+              <Building2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
               HOTEL & BANQUET CSR ENGINE • SECTION 80G DEDUCTIBLE
             </div>
-            <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-              Corporate CSR & <span className="text-emerald-400">Tax Exemption</span> Calculator
+            <h1 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
+              Corporate CSR & <span className="text-emerald-600 dark:text-emerald-400">Tax Exemption</span> Calculator
             </h1>
-            <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+            <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed">
               Calculate your exact corporate tax write-offs under Section 80G of the Indian Income Tax Act,
               quantify greenhouse gas reduction, and generate SEBI BRSR-compliant ESG audit metrics.
             </p>

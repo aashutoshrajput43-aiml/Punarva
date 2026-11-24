@@ -390,17 +390,17 @@ export default function FreshnessScannerPage() {
   return (
     <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8">
       {/* Header Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-950 via-slate-900 to-slate-950 p-6 sm:p-10 border border-emerald-500/30 shadow-2xl">
+      <div className="relative overflow-hidden rounded-3xl bg-white dark:bg-gradient-to-br dark:from-emerald-950 dark:via-slate-900 dark:to-slate-950 p-6 sm:p-10 border border-slate-200 dark:border-emerald-500/30 shadow-sm dark:shadow-2xl transition-colors">
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="space-y-3 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
-              <Cpu className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-500/40">
+              <Cpu className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 animate-pulse" />
               NEURAL THERMAL DECAY & COMPUTER VISION ENGINE V3.0
             </div>
-            <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-              AI Food Freshness <span className="text-emerald-400">Inspector</span>
+            <h1 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
+              AI Food Freshness <span className="text-emerald-600 dark:text-emerald-400">Inspector</span>
             </h1>
-            <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+            <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed">
               Real-time scientific food hygiene evaluation. Upload or snap your food photo, adjust holding temperature,
               and see how FSSAI safety equations determine human edibility or automatically route surplus to Municipal Bio-CNG plants.
             </p>
@@ -409,14 +409,14 @@ export default function FreshnessScannerPage() {
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition-all shadow-lg active:scale-95"
+              className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-slate-950 transition-all shadow-md active:scale-95"
             >
               <Upload className="w-4 h-4" />
               Upload Food Photo
             </button>
             <Link
               href="/donate"
-              className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 transition-all shadow-lg active:scale-95 flex-shrink-0"
+              className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 transition-all shadow-md active:scale-95 flex-shrink-0"
             >
               Donate Food Wizard
               <ArrowRight className="w-4 h-4" />
