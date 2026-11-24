@@ -4,13 +4,12 @@ import React, { useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
-  Car,
   Heart,
+  Car,
   Building2,
   Users,
-  ArrowRight,
   ShieldCheck,
-  CheckCircle2,
+  ArrowRight,
 } from "lucide-react";
 import PunarvaLogo from "@/components/PunarvaLogo";
 
@@ -19,14 +18,12 @@ function SignupForm() {
   const searchParams = useSearchParams();
   const initialRole = searchParams.get("role") || "VOLUNTEER";
 
-  const [role, setRole] = useState(initialRole);
+  const [role, setRole] = useState(initialRole.toUpperCase());
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     phone: "",
-    city: "Indore",
-    address: "",
     businessName: "",
     businessType: "Restaurant",
     fssaiLicense: "",
@@ -34,7 +31,6 @@ function SignupForm() {
     darpanId: "",
     registrationNo: "",
   });
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -47,23 +43,20 @@ function SignupForm() {
       const res = await fetch("/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...formData,
-          role,
-        }),
+        body: JSON.stringify({ ...formData, role }),
       });
 
       const data = await res.json();
-      if (res.ok) {
-        if (role === "VOLUNTEER") router.push("/volunteer");
-        else if (role === "DONOR") router.push("/donate");
-        else router.push("/map");
-        router.refresh();
-      } else {
-        setError(data.error || "Registration failed.");
+      if (!res.ok) {
+        throw new Error(data.error || "Registration failed");
       }
+
+      if (role === "DONOR") router.push("/donate");
+      else if (role === "VOLUNTEER") router.push("/volunteer");
+      else if (role === "NGO") router.push("/ngo");
+      else router.push("/");
     } catch (err: any) {
-      setError("Network error: " + err.message);
+      setError(err.message || "Failed to create account");
     } finally {
       setLoading(false);
     }
@@ -106,20 +99,20 @@ function SignupForm() {
               className={`p-3 rounded-2xl border text-center flex flex-col items-center gap-1.5 transition-all ${
                 isSel
                   ? "bg-emerald-500 text-slate-950 border-emerald-400 shadow-md font-bold"
-                  : "bg-slate-900 text-slate-300 border-emerald-950 hover:bg-slate-800"
+                  : "bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-emerald-950 hover:bg-slate-50 dark:hover:bg-slate-800 shadow-xs"
               }`}
             >
               <IconC className="w-5 h-5" />
-              <span className="text-xs">{r.label}</span>
+              <span className="text-xs font-semibold">{r.label}</span>
             </button>
           );
         })}
       </div>
 
       {/* Form Container */}
-      <div className="bg-slate-900/80 border border-emerald-900/40 p-6 sm:p-8 rounded-3xl backdrop-blur-xl shadow-2xl">
+      <div className="bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-emerald-900/40 p-6 sm:p-8 rounded-3xl backdrop-blur-xl shadow-xl transition-colors">
         {error && (
-          <div className="mb-4 p-3 rounded-xl bg-red-950/80 border border-red-800 text-red-300 text-xs text-center">
+          <div className="mb-4 p-3 rounded-xl bg-red-50 dark:bg-red-950/80 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-xs text-center font-medium">
             {error}
           </div>
         )}
@@ -127,49 +120,49 @@ function SignupForm() {
         <form onSubmit={handleRegister} className="space-y-4 text-xs">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block font-bold text-slate-300 mb-1">Full Name / Rep Name</label>
+              <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">Full Name / Rep Name</label>
               <input
                 type="text"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 placeholder="Aayush Batole"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-emerald-900/60 text-white focus:outline-none focus:border-emerald-500"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-emerald-900/60 text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500 shadow-inner"
                 required
               />
             </div>
 
             <div>
-              <label className="block font-bold text-slate-300 mb-1">Phone (+91)</label>
+              <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">Phone (+91)</label>
               <input
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                 placeholder="97708 69581"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-emerald-900/60 text-white focus:outline-none focus:border-emerald-500"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-emerald-900/60 text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500 shadow-inner"
                 required
               />
             </div>
 
             <div>
-              <label className="block font-bold text-slate-300 mb-1">Email Address</label>
+              <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">Email Address</label>
               <input
                 type="email"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 placeholder="you@email.com"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-emerald-900/60 text-white focus:outline-none focus:border-emerald-500"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-emerald-900/60 text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500 shadow-inner"
                 required
               />
             </div>
 
             <div>
-              <label className="block font-bold text-slate-300 mb-1">Password</label>
+              <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">Password</label>
               <input
                 type="password"
                 value={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 placeholder="••••••••"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-emerald-900/60 text-white focus:outline-none focus:border-emerald-500"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-emerald-900/60 text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500 shadow-inner"
                 required
               />
             </div>
@@ -177,28 +170,28 @@ function SignupForm() {
 
           {/* Role specific fields */}
           {role === "DONOR" && (
-            <div className="pt-2 border-t border-emerald-900/30 space-y-3">
-              <span className="font-bold text-amber-400">Donor Business Details</span>
+            <div className="pt-2 border-t border-slate-200 dark:border-emerald-900/30 space-y-3">
+              <span className="font-bold text-amber-600 dark:text-amber-400">Donor Business Details</span>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-slate-400 mb-1">Establishment Name</label>
+                  <label className="block text-slate-600 dark:text-slate-400 mb-1 font-medium">Establishment Name</label>
                   <input
                     type="text"
                     value={formData.businessName}
                     onChange={(e) => setFormData({ ...formData, businessName: e.target.value })}
                     placeholder="e.g. Radisson Blu Banquets"
-                    className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-emerald-900 text-white"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-emerald-900 text-slate-900 dark:text-white shadow-inner"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-400 mb-1">FSSAI License (Optional)</label>
+                  <label className="block text-slate-600 dark:text-slate-400 mb-1 font-medium">FSSAI License (Optional)</label>
                   <input
                     type="text"
                     value={formData.fssaiLicense}
                     onChange={(e) => setFormData({ ...formData, fssaiLicense: e.target.value })}
                     placeholder="14-digit license"
-                    className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-emerald-900 text-white"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-emerald-900 text-slate-900 dark:text-white shadow-inner"
                   />
                 </div>
               </div>
@@ -206,14 +199,14 @@ function SignupForm() {
           )}
 
           {role === "VOLUNTEER" && (
-            <div className="pt-2 border-t border-emerald-900/30 space-y-3">
-              <span className="font-bold text-cyan-400">Volunteer Fleet Details</span>
+            <div className="pt-2 border-t border-slate-200 dark:border-emerald-900/30 space-y-3">
+              <span className="font-bold text-cyan-600 dark:text-cyan-400">Volunteer Fleet Details</span>
               <div>
-                <label className="block text-slate-400 mb-1">Vehicle Type</label>
+                <label className="block text-slate-600 dark:text-slate-400 mb-1 font-medium">Vehicle Type</label>
                 <select
                   value={formData.vehicleType}
                   onChange={(e) => setFormData({ ...formData, vehicleType: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-emerald-900 text-white"
+                  className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-emerald-900 text-slate-900 dark:text-white shadow-inner"
                 >
                   <option value="Motorcycle">Motorcycle (Two-Wheeler)</option>
                   <option value="Scooter">Scooter / Electric Bike</option>
@@ -225,28 +218,28 @@ function SignupForm() {
           )}
 
           {role === "NGO" && (
-            <div className="pt-2 border-t border-emerald-900/30 space-y-3">
-              <span className="font-bold text-amber-400">NGO Registration & Darpan ID</span>
+            <div className="pt-2 border-t border-slate-200 dark:border-emerald-900/30 space-y-3">
+              <span className="font-bold text-amber-600 dark:text-amber-400">NGO Registration & Darpan ID</span>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-slate-400 mb-1">NITI Aayog Darpan ID</label>
+                  <label className="block text-slate-600 dark:text-slate-400 mb-1 font-medium">NITI Aayog Darpan ID</label>
                   <input
                     type="text"
                     value={formData.darpanId}
                     onChange={(e) => setFormData({ ...formData, darpanId: e.target.value })}
                     placeholder="MP/2021/028491"
-                    className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-emerald-900 text-white"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-emerald-900 text-slate-900 dark:text-white shadow-inner"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-400 mb-1">Registration No</label>
+                  <label className="block text-slate-600 dark:text-slate-400 mb-1 font-medium">Registration No</label>
                   <input
                     type="text"
                     value={formData.registrationNo}
                     onChange={(e) => setFormData({ ...formData, registrationNo: e.target.value })}
                     placeholder="REG-8841"
-                    className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-emerald-900 text-white"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-emerald-900 text-slate-900 dark:text-white shadow-inner"
                     required
                   />
                 </div>
@@ -257,16 +250,16 @@ function SignupForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-950/60 transition-all"
+            className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-slate-950 font-bold text-xs flex items-center justify-center gap-2 shadow-md transition-all active:scale-95"
           >
             <span>{loading ? "Creating Account..." : `Register as ${role}`}</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </form>
 
-        <div className="mt-6 pt-4 border-t border-emerald-900/30 text-center text-xs text-slate-400">
+        <div className="mt-6 pt-4 border-t border-slate-100 dark:border-emerald-900/30 text-center text-xs text-slate-600 dark:text-slate-400">
           Already have an account?{" "}
-          <Link href="/login" className="text-emerald-400 font-bold hover:underline">
+          <Link href="/login" className="text-emerald-600 dark:text-emerald-400 font-bold hover:underline">
             Sign In
           </Link>
         </div>
@@ -277,7 +270,7 @@ function SignupForm() {
 
 export default function SignupPage() {
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 py-16 px-4 sm:px-6 lg:px-8 flex items-center justify-center relative transition-colors">
+    <div className="min-h-screen bg-slate-50 dark:bg-transparent text-slate-900 dark:text-slate-100 py-16 px-4 sm:px-6 lg:px-8 flex items-center justify-center relative transition-colors">
       <Suspense fallback={<div className="text-emerald-600 dark:text-emerald-400 font-mono text-xs">Loading registration...</div>}>
         <SignupForm />
       </Suspense>

@@ -7,6 +7,11 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  experimental: {
+    outputFileTracingIncludes: {
+      "/**": ["./dev.db", "./prisma/dev.db"],
+    },
+  },
   images: {
     domains: ["images.unsplash.com", "tile.openstreetmap.org", "server.arcgisonline.com"],
   },
