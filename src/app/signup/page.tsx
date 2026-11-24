@@ -1,0 +1,286 @@
+"use client";
+
+import React, { useState, Suspense } from "react";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import {
+  Car,
+  Heart,
+  Building2,
+  Users,
+  ArrowRight,
+  ShieldCheck,
+  CheckCircle2,
+} from "lucide-react";
+import PunarvaLogo from "@/components/PunarvaLogo";
+
+function SignupForm() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const initialRole = searchParams.get("role") || "VOLUNTEER";
+
+  const [role, setRole] = useState(initialRole);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    phone: "",
+    city: "Indore",
+    address: "",
+    businessName: "",
+    businessType: "Restaurant",
+    fssaiLicense: "",
+    vehicleType: "Motorcycle",
+    darpanId: "",
+    registrationNo: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          role,
+        }),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        if (role === "VOLUNTEER") router.push("/volunteer");
+        else if (role === "DONOR") router.push("/donate");
+        else router.push("/map");
+        router.refresh();
+      } else {
+        setError(data.error || "Registration failed.");
+      }
+    } catch (err: any) {
+      setError("Network error: " + err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="w-full max-w-xl space-y-8 relative z-10">
+      <div className="text-center">
+        <Link href="/" className="inline-flex items-center gap-2 mb-4">
+          <div className="w-10 h-10 rounded-xl bg-slate-900 dark:bg-slate-950 p-1 border border-slate-200 dark:border-emerald-900/40 flex items-center justify-center">
+            <PunarvaLogo size={32} />
+          </div>
+          <span className="text-2xl font-black text-slate-900 dark:text-white">
+            Puna<span className="text-emerald-500">rva</span>
+          </span>
+        </Link>
+        <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+          Join the Food Rescue Mission
+        </h1>
+        <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
+          Choose your role to activate your citizen impact account.
+        </p>
+      </div>
+
+      {/* Role Selector Chips */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+        {[
+          { id: "VOLUNTEER", label: "Volunteer Driver", icon: Car },
+          { id: "DONOR", label: "Food Donor", icon: Heart },
+          { id: "NGO", label: "NGO Partner", icon: Building2 },
+          { id: "COMMUNITY", label: "Advocate", icon: Users },
+        ].map((r) => {
+          const IconC = r.icon;
+          const isSel = role === r.id;
+          return (
+            <button
+              key={r.id}
+              type="button"
+              onClick={() => setRole(r.id)}
+              className={`p-3 rounded-2xl border text-center flex flex-col items-center gap-1.5 transition-all ${
+                isSel
+                  ? "bg-emerald-500 text-slate-950 border-emerald-400 shadow-md font-bold"
+                  : "bg-slate-900 text-slate-300 border-emerald-950 hover:bg-slate-800"
+              }`}
+            >
+              <IconC className="w-5 h-5" />
+              <span className="text-xs">{r.label}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Form Container */}
+      <div className="bg-slate-900/80 border border-emerald-900/40 p-6 sm:p-8 rounded-3xl backdrop-blur-xl shadow-2xl">
+        {error && (
+          <div className="mb-4 p-3 rounded-xl bg-red-950/80 border border-red-800 text-red-300 text-xs text-center">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleRegister} className="space-y-4 text-xs">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block font-bold text-slate-300 mb-1">Full Name / Rep Name</label>
+              <input
+                type="text"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                placeholder="Aayush Batole"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-emerald-900/60 text-white focus:outline-none focus:border-emerald-500"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block font-bold text-slate-300 mb-1">Phone (+91)</label>
+              <input
+                type="tel"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                placeholder="97708 69581"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-emerald-900/60 text-white focus:outline-none focus:border-emerald-500"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block font-bold text-slate-300 mb-1">Email Address</label>
+              <input
+                type="email"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                placeholder="you@email.com"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-emerald-900/60 text-white focus:outline-none focus:border-emerald-500"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block font-bold text-slate-300 mb-1">Password</label>
+              <input
+                type="password"
+                value={formData.password}
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                placeholder="••••••••"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-emerald-900/60 text-white focus:outline-none focus:border-emerald-500"
+                required
+              />
+            </div>
+          </div>
+
+          {/* Role specific fields */}
+          {role === "DONOR" && (
+            <div className="pt-2 border-t border-emerald-900/30 space-y-3">
+              <span className="font-bold text-amber-400">Donor Business Details</span>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-slate-400 mb-1">Establishment Name</label>
+                  <input
+                    type="text"
+                    value={formData.businessName}
+                    onChange={(e) => setFormData({ ...formData, businessName: e.target.value })}
+                    placeholder="e.g. Radisson Blu Banquets"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-emerald-900 text-white"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-slate-400 mb-1">FSSAI License (Optional)</label>
+                  <input
+                    type="text"
+                    value={formData.fssaiLicense}
+                    onChange={(e) => setFormData({ ...formData, fssaiLicense: e.target.value })}
+                    placeholder="14-digit license"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-emerald-900 text-white"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {role === "VOLUNTEER" && (
+            <div className="pt-2 border-t border-emerald-900/30 space-y-3">
+              <span className="font-bold text-cyan-400">Volunteer Fleet Details</span>
+              <div>
+                <label className="block text-slate-400 mb-1">Vehicle Type</label>
+                <select
+                  value={formData.vehicleType}
+                  onChange={(e) => setFormData({ ...formData, vehicleType: e.target.value })}
+                  className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-emerald-900 text-white"
+                >
+                  <option value="Motorcycle">Motorcycle (Two-Wheeler)</option>
+                  <option value="Scooter">Scooter / Electric Bike</option>
+                  <option value="Car">Car / Sedan / SUV</option>
+                  <option value="Van">Cargo Van / E-Rickshaw</option>
+                </select>
+              </div>
+            </div>
+          )}
+
+          {role === "NGO" && (
+            <div className="pt-2 border-t border-emerald-900/30 space-y-3">
+              <span className="font-bold text-amber-400">NGO Registration & Darpan ID</span>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-slate-400 mb-1">NITI Aayog Darpan ID</label>
+                  <input
+                    type="text"
+                    value={formData.darpanId}
+                    onChange={(e) => setFormData({ ...formData, darpanId: e.target.value })}
+                    placeholder="MP/2021/028491"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-emerald-900 text-white"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-slate-400 mb-1">Registration No</label>
+                  <input
+                    type="text"
+                    value={formData.registrationNo}
+                    onChange={(e) => setFormData({ ...formData, registrationNo: e.target.value })}
+                    placeholder="REG-8841"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-emerald-900 text-white"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-950/60 transition-all"
+          >
+            <span>{loading ? "Creating Account..." : `Register as ${role}`}</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        </form>
+
+        <div className="mt-6 pt-4 border-t border-emerald-900/30 text-center text-xs text-slate-400">
+          Already have an account?{" "}
+          <Link href="/login" className="text-emerald-400 font-bold hover:underline">
+            Sign In
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function SignupPage() {
+  return (
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 py-16 px-4 sm:px-6 lg:px-8 flex items-center justify-center relative transition-colors">
+      <Suspense fallback={<div className="text-emerald-600 dark:text-emerald-400 font-mono text-xs">Loading registration...</div>}>
+        <SignupForm />
+      </Suspense>
+    </div>
+  );
+}

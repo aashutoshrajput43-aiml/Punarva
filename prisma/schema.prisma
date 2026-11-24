@@ -1,0 +1,252 @@
+// RescueBite Database Schema
+// Supported on SQLite for local zero-config development, and PostgreSQL (Neon) for production
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String            @id @default(uuid())
+  email          String            @unique
+  passwordHash   String
+  name           String
+  role           String            // DONOR, VOLUNTEER, NGO, ADMIN
+  phone          String
+  city           String            @default("Indore")
+  lat            Float             @default(22.7196)
+  lng            Float             @default(75.8577)
+  karma          Int               @default(0)
+  isVerified     Boolean           @default(false)
+  avatar         String?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  donorProfile     DonorProfile?
+  volunteerProfile VolunteerProfile?
+  ngoProfile       NgoProfile?
+  foodListings     FoodListing[]     @relation("DonorListings")
+  matches          Match[]           @relation("VolunteerMatches")
+  ngoMatches       Match[]           @relation("NgoMatches")
+  notifications    Notification[]
+  deliveryDonor    DeliveryRecord[]  @relation("DonorDeliveries")
+  deliveryVolunteer DeliveryRecord[] @relation("VolunteerDeliveries")
+  deliveryNgo      DeliveryRecord[]  @relation("NgoDeliveries")
+}
+
+model DonorProfile {
+  id             String   @id @default(uuid())
+  userId         String   @unique
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  businessName   String
+  businessType   String   // Restaurant, Hotel, Marriage Hall, Caterer, Event Organizer, Corporate, NGO, Individual, Other
+  fssaiLicense   String?
+  address        String
+  landmark       String?
+  createdAt      DateTime @default(now())
+}
+
+model VolunteerProfile {
+  id                String   @id @default(uuid())
+  userId            String   @unique
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  vehicleType       String   @default("Motorcycle") // Motorcycle, Scooter, Car, Van, Auto, Cargo Rickshaw
+  isAvailable       Boolean  @default(true)
+  availabilityHours String   @default("Flexible")
+  emergencyRescuer  Boolean  @default(true)
+  rating            Float    @default(4.9)
+  totalDeliveries   Int      @default(0)
+  activeMissionId   String?
+  createdAt         DateTime @default(now())
+}
+
+model NgoProfile {
+  id                   String   @id @default(uuid())
+  userId               String   @unique
+  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orgName              String
+  darpanId             String?
+  registrationNo       String?
+  capacityKgPerDay     Int      @default(200)
+  beneficiariesCount   Int      @default(150)
+  foodPreferences      String   @default("All") // Veg Only, All
+  coldStorageAvailable Boolean  @default(true)
+  isGovtRecognized     Boolean  @default(true)
+  createdAt            DateTime @default(now())
+}
+
+model FoodListing {
+  id                  String   @id @default(uuid())
+  donorId             String
+  donor               User     @relation("DonorListings", fields: [donorId], references: [id], onDelete: Cascade)
+  title               String
+  category            String   // cooked, packaged, raw_produce, bakery
+  isVeg               Boolean  @default(true)
+  quantityKg          Float
+  approxServings      Int
+  cookedAt            DateTime @default(now())
+  expiresAt           DateTime
+  pickupWindowStart   String   @default("10:00 AM")
+  pickupWindowEnd     String   @default("02:00 PM")
+  storageCondition    String   @default("Ambient") // Ambient, Insulated, Refrigerated, Hot-holding
+  allergens           String?  @default("None reported")
+  specialInstructions String?
+  photos              String   @default("[]") // JSON string of photo URLs/base64
+  status              String   @default("SUBMITTED") // SUBMITTED, VERIFIED, MATCHED, PICKED_UP, IN_TRANSIT, DELIVERED, REJECTED, EXPIRED
+  freshnessScore      Float    @default(90)
+  aiVerdict           String   @default("GENUINE") // GENUINE, REVIEW, REJECT
+  aiReasoning         String   @default("Freshly cooked vegetarian meal within recommended thermal window.")
+  isEmergency         Boolean  @default(false)
+  lat                 Float
+  lng                 Float
+  address             String
+  landmark            String?
+  deliveryPin         String   @default("1234") // 4-digit verification code
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  matches             Match[]
+  deliveryRecord      DeliveryRecord?
+}
+
+model Match {
+  id             String       @id @default(uuid())
+  listingId      String
+  listing        FoodListing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  volunteerId    String?
+  volunteer      User?        @relation("VolunteerMatches", fields: [volunteerId], references: [id], onDelete: SetNull)
+  ngoId          String?
+  ngo            User?        @relation("NgoMatches", fields: [ngoId], references: [id], onDelete: SetNull)
+  matchScore     Float        @default(95.0)
+  status         String       @default("PROPOSED") // PROPOSED, ACCEPTED, DECLINED, OVERRIDDEN, COMPLETED
+  overrideReason String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+model DeliveryRecord {
+  id                  String      @id @default(uuid())
+  listingId           String      @unique
+  listing             FoodListing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  donorId             String
+  donor               User        @relation("DonorDeliveries", fields: [donorId], references: [id], onDelete: Cascade)
+  volunteerId         String?
+  volunteer           User?       @relation("VolunteerDeliveries", fields: [volunteerId], references: [id], onDelete: SetNull)
+  ngoId               String?
+  ngo                 User?       @relation("NgoDeliveries", fields: [ngoId], references: [id], onDelete: SetNull)
+  quantityKg          Float
+  mealsServed         Int
+  co2SavedKg          Float
+  waterSavedLiters    Float
+  pickupPhotoUrl      String?
+  dropPhotoUrl        String?
+  deliveryPinVerified Boolean     @default(true)
+  receiptNumber       String      @unique
+  completedAt         DateTime    @default(now())
+  createdAt           DateTime    @default(now())
+}
+
+model WasteItem {
+  id                   String   @id @default(uuid())
+  title                String
+  category             String   // WET_ORGANIC, DRY_RECYCLABLE_PAPER, DRY_RECYCLABLE_PLASTIC, DRY_RECYCLABLE_GLASS, DRY_RECYCLABLE_METAL, E_WASTE, HAZARDOUS
+  subCategory          String?
+  confidence           Float    @default(0.95)
+  segregationTips      String
+  disposalInstructions String
+  photoUrl             String?
+  createdAt            DateTime @default(now())
+}
+
+model Collector {
+  id                String          @id @default(uuid())
+  name              String
+  organization      String
+  phone             String
+  city              String          @default("Indore")
+  address           String
+  lat               Float
+  lng               Float
+  materialsAccepted String          // e.g. "Plastic, Cardboard, Metal, E-waste"
+  isVerified        Boolean         @default(true)
+  rating            Float           @default(4.8)
+  openingHours      String          @default("09:00 AM - 06:00 PM")
+  createdAt         DateTime        @default(now())
+  pickupRequests    PickupRequest[]
+}
+
+model RecyclingCentre {
+  id           String   @id @default(uuid())
+  name         String
+  facilityType String   // Composting Plant, Plastic Granulation, E-waste Refining, Glass Furnace, Paper Mill
+  phone        String
+  city         String   @default("Indore")
+  address      String
+  lat          Float
+  lng          Float
+  capacityTons Float    @default(50.0)
+  materials    String
+  createdAt    DateTime @default(now())
+}
+
+model PickupRequest {
+  id            String     @id @default(uuid())
+  wasteCategory String
+  estimatedKg   Float
+  contactName   String
+  phone         String
+  address       String
+  lat           Float      @default(22.7196)
+  lng           Float      @default(75.8577)
+  preferredTime String     @default("Tomorrow Morning")
+  status        String     @default("PENDING") // PENDING, ASSIGNED, COMPLETED, CANCELLED
+  collectorId   String?
+  collector     Collector? @relation(fields: [collectorId], references: [id], onDelete: SetNull)
+  createdAt     DateTime   @default(now())
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  message   String
+  type      String   @default("MATCH_ALERT") // MATCH_ALERT, EMERGENCY_ALERT, STATUS_UPDATE, REWARD_CLAIM, SYSTEM
+  link      String?
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  subject   String
+  message   String
+  isRead    Boolean  @default(false)
+  reply     String?
+  createdAt DateTime @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  action    String
+  actorId   String?
+  actorName String?
+  actorRole String?
+  details   String
+  ipAddress String   @default("127.0.0.1")
+  createdAt DateTime @default(now())
+}
+
+model CmsSetting {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  value     String
+  updatedAt DateTime @updatedAt
+}
+

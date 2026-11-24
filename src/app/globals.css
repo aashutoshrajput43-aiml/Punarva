@@ -1,0 +1,368 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-primary: #f8fafc;
+    --bg-card: #ffffff;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --border-color: #e2e8f0;
+  }
+
+  .dark {
+    --bg-primary: #05130b;
+    --bg-card: #091a10;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --border-color: #163824;
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+}
+
+/* Safe area padding for modern notch/indicator phones */
+.safe-area-pb {
+  padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+}
+
+/* Glassmorphism helpers */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  color: #0f172a;
+}
+
+.dark .glass-panel {
+  background: rgba(11, 30, 21, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(16, 185, 129, 0.15);
+  color: #f8fafc;
+}
+
+/* ==========================================================================
+   DAY MODE (LIGHT THEME) HIGH-CONTRAST TYPOGRAPHY & VISIBILITY ENFORCEMENT
+   Fixes disappearing / white-on-white text across the entire website
+   ========================================================================== */
+
+html:not(.dark) {
+  color-scheme: light;
+}
+
+html:not(.dark) body {
+  color: #0f172a;
+}
+
+/* 1. Within glass panels in light mode, force white/faint headings to crisp dark text */
+html:not(.dark) .glass-panel h1,
+html:not(.dark) .glass-panel h2,
+html:not(.dark) .glass-panel h3,
+html:not(.dark) .glass-panel h4,
+html:not(.dark) .glass-panel h5,
+html:not(.dark) .glass-panel h6,
+html:not(.dark) .glass-panel-light h1,
+html:not(.dark) .glass-panel-light h2,
+html:not(.dark) .glass-panel-light h3,
+html:not(.dark) .glass-panel-light h4 {
+  color: #0f172a !important;
+}
+
+/* 2. Disallow raw .text-white on light cards / panels (exclude buttons & badges that have colored backgrounds) */
+html:not(.dark) .glass-panel .text-white:not(button):not(.bg-emerald-500):not(.bg-emerald-600):not(.bg-red-500):not(.bg-amber-500):not([class*="bg-emerald-"]):not([class*="bg-red-"]):not([class*="bg-amber-"]):not([class*="bg-slate-9"]):not([class*="bg-black"]) {
+  color: #0f172a !important;
+}
+
+/* 3. Boost contrast of faint slate text in Light Mode so it never fades into white */
+html:not(.dark) .glass-panel .text-slate-100:not(button),
+html:not(.dark) .glass-panel .text-slate-200:not(button) {
+  color: #1e293b !important;
+}
+
+html:not(.dark) .glass-panel .text-slate-300:not(button) {
+  color: #334155 !important;
+}
+
+html:not(.dark) .glass-panel .text-slate-400:not(button) {
+  color: #64748b !important;
+}
+
+html:not(.dark) .glass-panel label {
+  color: #1e293b !important;
+}
+
+/* 4. Global fallback for body text where text-slate-300 was placed on default light page background */
+html:not(.dark) body .text-slate-300:not([class*="bg-slate-9"]):not([class*="bg-emerald-9"]):not([class*="bg-black"]):not([class*="bg-red-9"]):not([class*="bg-amber-9"]) {
+  color: #334155;
+}
+
+html:not(.dark) body .text-slate-400:not([class*="bg-slate-9"]):not([class*="bg-emerald-9"]):not([class*="bg-black"]):not([class*="bg-red-9"]):not([class*="bg-amber-9"]) {
+  color: #64748b;
+}
+
+/* 5. Inputs inside glass-panel in light mode */
+html:not(.dark) .glass-panel input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+html:not(.dark) .glass-panel select,
+html:not(.dark) .glass-panel textarea {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+html:not(.dark) .glass-panel input::placeholder,
+html:not(.dark) .glass-panel textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+.glass-panel-light {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+.dark .glass-panel-light {
+  background: rgba(9, 26, 16, 0.85);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.glass-card-hover {
+  transition: all 0.25s ease;
+}
+
+.glass-card-hover:hover {
+  transform: translateY(-3px);
+  border-color: rgba(16, 185, 129, 0.4);
+  box-shadow: 0 12px 25px -5px rgba(16, 185, 129, 0.15);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+.dark ::-webkit-scrollbar-track {
+  background: #06130d;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #164e33;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #10b981;
+}
+
+/* Leaflet map styles fix */
+.leaflet-container {
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 10;
+  background: #0f172a !important;
+}
+
+.custom-map-pill,
+.clean-food-pin,
+.clean-entity-pin,
+.user-gps-pill,
+.eta-pill {
+  background: transparent !important;
+  border: none !important;
+}
+
+.eta-pill {
+  white-space: nowrap !important;
+  width: auto !important;
+  height: auto !important;
+  min-width: 170px !important;
+  pointer-events: none !important;
+}
+
+.clean-food-pin:hover > div {
+  transform: scale(1.15) !important;
+  transition: transform 0.15s ease-out;
+}
+
+.clean-entity-pin:hover > div {
+  transform: scale(1.15) !important;
+  transition: transform 0.15s ease-out;
+}
+
+/* Modern Sleek Leaflet Popups */
+.leaflet-popup-content-wrapper {
+  background: #ffffff !important;
+  border-radius: 16px !important;
+  box-shadow: 0 14px 35px -5px rgba(0, 0, 0, 0.35) !important;
+  border: 1px solid rgba(16, 185, 129, 0.3) !important;
+  padding: 4px 6px !important;
+}
+
+.leaflet-popup-tip {
+  background: #ffffff !important;
+}
+
+.leaflet-popup-close-button {
+  top: 8px !important;
+  right: 8px !important;
+  color: #64748b !important;
+  font-size: 14px !important;
+}
+
+/* Pulse animation for emergency icons */
+@keyframes emergencyPulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+  70% { transform: scale(1.05); box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+/* Pulse animation for GPS Live radar beacon */
+@keyframes gpsRadarPulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+.pulse-emergency {
+  animation: emergencyPulse 1.8s infinite ease-in-out;
+}
+
+/* ==========================================================================
+   PARALLAX STARS BACKGROUND & NIGHT MODE TRANSPARENCY
+   Ensures the animated starfield is crystal clear in Night Mode (Dark Theme)
+   ========================================================================== */
+@keyframes animStar {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-2000px);
+  }
+}
+
+.animate-stars-layer1 {
+  animation: animStar 35s linear infinite;
+}
+
+.animate-stars-layer2 {
+  animation: animStar 65s linear infinite;
+}
+
+.animate-stars-layer3 {
+  animation: animStar 100s linear infinite;
+}
+
+/* Allow fixed stars background to show through in dark mode */
+.dark body {
+  background-color: #040a06;
+}
+
+.dark main {
+  background-color: transparent !important;
+}
+
+.dark main > div {
+  background-color: transparent !important;
+}
+
+/* Allow day ambient background to show clearly through page wrappers in Day Mode */
+html:not(.dark) main,
+html:not(.dark) main > div {
+  background-color: transparent !important;
+}
+
+
+/* ==========================================================================
+   DAY MODE AMBIENT ECO-ANIMATIONS (LIGHT THEME)
+   Ultra-lightweight, 60fps GPU-accelerated floating eco aura & micro-particles
+   ========================================================================== */
+@keyframes dayParticleFloat {
+  0% {
+    transform: translateY(0px) translateX(0px);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.85;
+  }
+  85% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(-115vh) translateX(30px);
+    opacity: 0;
+  }
+}
+
+@keyframes dayLeafSway {
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(40deg) scale(1.15);
+  }
+}
+
+.animate-day-leaf-sway {
+  animation: dayLeafSway 6s ease-in-out infinite;
+}
+
+@keyframes dayOrbBreathe1 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  50% {
+    transform: translate(45px, 35px) scale(1.12);
+  }
+}
+
+@keyframes dayOrbBreathe2 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  50% {
+    transform: translate(-35px, 40px) scale(1.08);
+  }
+}
+
+@keyframes dayOrbBreathe3 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  50% {
+    transform: translate(30px, -35px) scale(1.15);
+  }
+}
+
+.animate-day-orb1 {
+  animation: dayOrbBreathe1 18s ease-in-out infinite;
+}
+
+.animate-day-orb2 {
+  animation: dayOrbBreathe2 24s ease-in-out infinite;
+}
+
+.animate-day-orb3 {
+  animation: dayOrbBreathe3 28s ease-in-out infinite;
+}
+
+

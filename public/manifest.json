@@ -1,0 +1,16 @@
+{
+  "name": "RescueBite — Food & Waste Rescue Platform",
+  "short_name": "RescueBite",
+  "description": "AI-powered surplus food rescue and circular waste management platform",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#05130b",
+  "theme_color": "#05130b",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}
