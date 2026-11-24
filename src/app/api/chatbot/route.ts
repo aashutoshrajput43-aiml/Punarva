@@ -19,7 +19,7 @@ export async function POST(req: Request) {
                 {
                   parts: [
                     {
-                      text: `You are RescueBot AI, the official intelligent assistant for RescueBite — an Indian circular economy and surplus food rescue platform connecting hotels, restaurants, caterers with NGOs, verified volunteers, and municipal recyclers.
+                      text: `You are PunarvaBot AI, the official intelligent assistant for Punarva — an Indian circular economy and surplus food rescue platform connecting hotels, restaurants, caterers with NGOs, verified volunteers, and municipal recyclers.
 You know about:
 - Food donation safety and FSSAI surplus food regulations
 - Good Samaritan Act protections for donors
@@ -52,7 +52,7 @@ Give a helpful, encouraging, concise (2-4 sentences) answer with practical guida
     }
 
     // Deterministic Rule Engine for Chatbot
-    let reply = "Welcome to RescueBite! You can donate surplus food in under 30 seconds at /donate, view live food dispatches on our tactical Live Map (/map), or sort waste materials at /waste-sorter.";
+    let reply = "Welcome to Punarva! You can donate surplus food in under 30 seconds at /donate, view live food dispatches on our tactical Live Map (/map), or sort waste materials at /waste-sorter.";
     let quickReplies: { label: string; action: string }[] = [];
 
     if (q.includes("donate") || q.includes("extra food") || q.includes("hotel") || q.includes("wedding")) {
@@ -73,13 +73,13 @@ Give a helpful, encouraging, concise (2-4 sentences) answer with practical guida
         { label: "View on Live Map", action: "Show me live dispatch map" },
       ];
     } else if (q.includes("volunteer") || q.includes("driver") || q.includes("bike")) {
-      reply = "Volunteers are the backbone of RescueBite! As a volunteer, you receive real-time SMS/WhatsApp and in-app alerts when surplus food is ready near you. You use insulated bags for cold-chain safety and drop meals at verified shelters.";
+      reply = "Volunteers are the backbone of Punarva! As a volunteer, you receive real-time SMS/WhatsApp and in-app alerts when surplus food is ready near you. You use insulated bags for cold-chain safety and drop meals at verified shelters.";
       quickReplies = [
         { label: "Sign Up as Volunteer", action: "How do I become a volunteer?" },
         { label: "Open Volunteer App", action: "Open Volunteer Dashboard" },
       ];
     } else if (q.includes("80g") || q.includes("tax") || q.includes("receipt") || q.includes("certificate")) {
-      reply = "Every verified food rescue on RescueBite automatically generates an auditable 80G-style tax deduction certificate for the donor, signed digitally with delivery PIN verification and meal calculation formulas.";
+      reply = "Every verified food rescue on Punarva automatically generates an auditable 80G-style tax deduction certificate for the donor, signed digitally with delivery PIN verification and meal calculation formulas.";
     } else if (q.includes("fssai") || q.includes("safety") || q.includes("hygiene") || q.includes("law")) {
       reply = "Under the FSSAI (Recovery & Distribution of Surplus Food) Regulations and the Good Samaritan provisions, donors who act in good faith are protected from liability. Food must be stored at safe holding temperatures (hot above 60°C or cold below 5°C).";
     }
@@ -87,7 +87,7 @@ Give a helpful, encouraging, concise (2-4 sentences) answer with practical guida
     return NextResponse.json({ reply, quickReplies });
   } catch (err: any) {
     return NextResponse.json({
-      reply: "RescueBite is live and monitoring surplus food rescue missions across India. How can I assist you?",
+      reply: "Punarva is live and monitoring surplus food rescue missions across India. How can I assist you?",
     });
   }
 }

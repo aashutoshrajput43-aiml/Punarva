@@ -43,7 +43,7 @@ export function generate80GPdfReceipt(data: ReceiptData) {
   doc.setTextColor(255, 255, 255);
   doc.setFont("helvetica", "bold");
   doc.setFontSize(18);
-  doc.text("RESCUEBITE ZERO WASTE FOUNDATION", 105, 24, { align: "center" });
+  doc.text("PUNARVA ZERO WASTE FOUNDATION", 105, 24, { align: "center" });
 
   doc.setFontSize(9);
   doc.setFont("helvetica", "normal");
@@ -165,7 +165,7 @@ export function generate80GPdfReceipt(data: ReceiptData) {
   doc.setFont("helvetica", "italic");
   doc.setTextColor(100, 100, 100);
   doc.text(
-    "Tax Exemption Note: Contributions and certified food logistics expenses are eligible for tax deduction under Section 80G of the Income Tax Act, 1961. This certificate is digitally audited and timestamped on the RescueBite ledger.",
+    "Tax Exemption Note: Contributions and certified food logistics expenses are eligible for tax deduction under Section 80G of the Income Tax Act, 1961. This certificate is digitally audited and timestamped on the Punarva ledger.",
     16,
     228,
     { maxWidth: 178, lineHeightFactor: 1.3 }
@@ -179,7 +179,7 @@ export function generate80GPdfReceipt(data: ReceiptData) {
   doc.text("Chief Food Safety Officer", 16, 250);
   doc.setFont("helvetica", "normal");
   doc.setFontSize(8);
-  doc.text("RescueBite Quality Assurance Board", 16, 255);
+  doc.text("Punarva Quality Assurance Board", 16, 255);
 
   doc.line(135, 244, 194, 244);
   doc.setFontSize(9);

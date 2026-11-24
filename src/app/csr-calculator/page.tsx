@@ -262,7 +262,7 @@ export default function CSRCalculatorPage() {
                   SEBI BRSR Principle 6 (Environment) & Principle 8 (Inclusive Growth)
                 </span>
                 <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
-                  Every food mission completed on RescueBite automatically generates a digitally signed
+                  Every food mission completed on Punarva automatically generates a digitally signed
                   Section 80G tax receipt featuring donor credentials, NGO Darpan registration ID,
                   and verifiable CO₂ equivalent calculations for corporate audit filing.
                 </p>

@@ -75,7 +75,7 @@ export default function AdminDashboardPage() {
     helpline_phone: "+91 97708 69581",
     helpline_email: "hello@rescuebite.in",
     hero_h1: "No food wasted. No one left hungry.",
-    hero_subtext: "RescueBite bridges restaurants, hotels, caterers, grocery stores and households with local NGOs, verified volunteers and recyclers across India in real time.",
+    hero_subtext: "Punarva bridges restaurants, hotels, caterers, grocery stores and households with local NGOs, verified volunteers and recyclers across India in real time.",
   });
   const [cmsSaved, setCmsSaved] = useState(false);
 
@@ -187,7 +187,7 @@ export default function AdminDashboardPage() {
               RB
             </div>
             <div>
-              <div className="font-black text-slate-900 text-sm leading-tight">RescueBite</div>
+              <div className="font-black text-slate-900 text-sm leading-tight">Punarva</div>
               <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
                 Admin Control Center
               </div>
@@ -197,7 +197,7 @@ export default function AdminDashboardPage() {
           {/* Super Admin Badge Pill */}
           <div className="p-4 border-b border-slate-100 flex items-center justify-between">
             <div>
-              <div className="font-bold text-xs text-slate-900">RescueBite Admin</div>
+              <div className="font-bold text-xs text-slate-900">Punarva Admin</div>
               <div className="text-[10px] text-slate-400 font-mono">SUPER ADMIN</div>
             </div>
             <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold text-[10px] border border-emerald-300">
@@ -278,7 +278,7 @@ export default function AdminDashboardPage() {
               Admin Dashboard
             </h1>
             <p className="text-xs text-slate-500 mt-0.5">
-              RescueBite Platform — Control Center & Live Verification Gate
+              Punarva Platform — Control Center & Live Verification Gate
             </p>
           </div>
 

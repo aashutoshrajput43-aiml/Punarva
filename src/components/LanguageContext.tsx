@@ -15,9 +15,9 @@ interface Translations {
 export const translations: Translations = {
   // Brand & Slogans
   brandTitle: {
-    en: "RescueBite",
-    hi: "रेस्क्यूबाइट",
-    hinglish: "RescueBite",
+    en: "Punarva",
+    hi: "पुनर्वा",
+    hinglish: "Punarva",
   },
   slogan: {
     en: "Transforming surplus into sustenance, and waste into a resource.",
@@ -591,9 +591,9 @@ export const translations: Translations = {
 
   // Footer
   footerMission: {
-    en: "RescueBite is India's dedicated surplus food rescue, cold-chain telemetry, and circular waste segregation network.",
-    hi: "रेस्क्यूबाइट भारत का समर्पित अतिरिक्त भोजन बचाव, कोल्ड-चेन टेलीमेट्री और चक्रीय अपशिष्ट पृथक्करण नेटवर्क है।",
-    hinglish: "RescueBite India ka dedicated surplus food rescue, cold-chain telemetry aur circular waste management network hai.",
+    en: "Punarva is India's dedicated surplus food rescue, cold-chain telemetry, and circular waste segregation network.",
+    hi: "पुनर्वा भारत का समर्पित अतिरिक्त भोजन बचाव, कोल्ड-चेन टेलीमेट्री और चक्रीय अपशिष्ट पृथक्करण नेटवर्क है।",
+    hinglish: "Punarva India ka dedicated surplus food rescue, cold-chain telemetry aur circular waste management network hai.",
   },
   allRightsReserved: {
     en: "All rights reserved.",

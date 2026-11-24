@@ -41,7 +41,7 @@ export default function ContactPage() {
       <div className="max-w-4xl mx-auto space-y-12">
         <div className="text-center max-w-xl mx-auto space-y-2">
           <h1 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
-            Contact RescueBite Headquarters
+            Contact Punarva Headquarters
           </h1>
           <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
             Have partnership inquiries, corporate buffet contracts, or volunteer drive requests? Reach out to our civic desk.
@@ -66,7 +66,7 @@ export default function ContactPage() {
               </div>
               <div>
                 <a
-                  href="https://wa.me/919770869581?text=Hello%20RescueBite%2C%20I%20need%20assistance%20with%20food%20rescue"
+                  href="https://wa.me/919770869581?text=Hello%20Punarva%2C%20I%20need%20assistance%20with%20food%20rescue"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs text-emerald-500 hover:text-emerald-300 transition-colors inline-flex items-center gap-1 font-semibold"

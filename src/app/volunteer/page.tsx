@@ -552,7 +552,7 @@ export default function VolunteerDashboardPage() {
                     onChange={(e) => setChecklist({ ...checklist, goodSamaritanBadge: e.target.checked })}
                     className="mt-0.5 rounded text-emerald-500"
                   />
-                  <span>Digital RescueBite Volunteer ID & PIN prompt ready</span>
+                  <span>Digital Punarva Volunteer ID & PIN prompt ready</span>
                 </label>
               </div>
 

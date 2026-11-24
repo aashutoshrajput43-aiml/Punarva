@@ -902,7 +902,7 @@ export default function FreshnessScannerPage() {
 
               <p className="text-xs text-slate-600 dark:text-slate-300">
                 Under FSSAI Good Samaritan regulations, food held excessive time in the thermal danger zone is legally prohibited
-                from human intake. RescueBite automatically routes this {quantityKg} kg lot to the <strong>Indore Municipal Bio-CNG Gobar-Dhan Plant</strong>.
+                from human intake. Punarva automatically routes this {quantityKg} kg lot to the <strong>Indore Municipal Bio-CNG Gobar-Dhan Plant</strong>.
               </p>
 
               {/* Bio-methane Recovery Metrics */}

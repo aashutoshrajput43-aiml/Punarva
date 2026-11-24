@@ -100,7 +100,7 @@ export default function Footer() {
       <div className="border-t border-slate-200 dark:border-emerald-900/30 py-6 px-4">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
           <div>
-            © 2026 RescueBite India. {t("allRightsReserved", "All rights reserved.")}
+            © 2026 Punarva. {t("allRightsReserved", "All rights reserved.")}
           </div>
           <div className="flex items-center gap-4">
             <span>Indore • Bhopal • Delhi • Mumbai • Bangalore • Hyderabad • Pune</span>
